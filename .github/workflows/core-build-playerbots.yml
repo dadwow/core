@@ -10,27 +10,8 @@ on:
 
 jobs:
   build:
-    strategy:
-      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
-      fail-fast: false
-      matrix:
-        # the result of the matrix will be the combination of all attributes, so we get os*compiler builds
-        include:
-          - os: ubuntu-22.04
-            c_compiler: clang
-            cpp_compiler: clang++
-            build_type: Release
-          - os: ubuntu-22.04
-            c_compiler: gcc
-            cpp_compiler: g++
-            build_type: Release
-          - os: ubuntu-24.04
-            c_compiler: gcc
-            cpp_compiler: g++
-            build_type: Release
-            
-    runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }}-${{ matrix.cpp_compiler }}
+    runs-on: ubuntu-22.04
+    name: ubuntu-22.04-clang
 
     steps:
     - name: Checkout AzerothCore
@@ -84,14 +65,14 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
-        -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
-        -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
-        -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        -DCMAKE_CXX_COMPILER=clang++
+        -DCMAKE_C_COMPILER=clang
+        -DCMAKE_BUILD_TYPE=Release
         -S ${{ github.workspace }}
 
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
-      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
 
     # - name: Test
     #   working-directory: ${{ steps.strings.outputs.build-output-dir }}

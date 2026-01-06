@@ -1,0 +1,82 @@
+# MySQL Configuration for Raspberry Pi 5 (8GB RAM)
+# Optimized for ARM architecture with 8GB RAM
+# Conservative settings to leave headroom for other services
+
+[mysqld]
+# Basic Settings
+port = 3306
+socket = /var/run/mysqld/mysqld.sock
+default-storage-engine = InnoDB
+character-set-server = utf8mb4
+collation-server = utf8mb4_general_ci
+
+# Connection Settings
+max_connections = 150
+max_connect_errors = 100
+wait_timeout = 600
+interactive_timeout = 600
+max_allowed_packet = 64M
+
+# InnoDB Settings - Optimized for 8GB RAM ARM system
+# Using ~60% of RAM for MySQL (4.8GB), leaving 3.2GB for OS and other services
+innodb_buffer_pool_size = 3G
+innodb_log_file_size = 256M
+innodb_log_buffer_size = 32M
+innodb_flush_log_at_trx_commit = 2
+innodb_flush_method = O_DIRECT
+innodb_file_per_table = 1
+innodb_buffer_pool_instances = 4
+innodb_io_capacity = 200
+innodb_io_capacity_max = 400
+innodb_read_io_threads = 4
+innodb_write_io_threads = 4
+
+# Thread Settings
+thread_cache_size = 16
+thread_stack = 256K
+
+# Table Cache
+table_open_cache = 2000
+table_definition_cache = 1000
+open_files_limit = 4000
+
+# Temp Tables
+tmp_table_size = 128M
+max_heap_table_size = 128M
+
+# Sort and Join Buffers
+sort_buffer_size = 2M
+read_buffer_size = 1M
+read_rnd_buffer_size = 2M
+join_buffer_size = 2M
+
+# MyISAM Settings
+key_buffer_size = 64M
+myisam_sort_buffer_size = 16M
+
+# Logging (production-ready)
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow-query.log
+long_query_time = 5
+log_queries_not_using_indexes = 0
+
+# Binary Logging
+binlog_expire_logs_seconds = 604800  # 7 days
+max_binlog_size = 100M
+
+# Performance Schema (lightweight)
+performance_schema = ON
+performance_schema_max_table_instances = 1000
+
+# ARM-specific optimizations
+# Disable transparent huge pages support (better for ARM)
+# (This needs to be set at system level, not in MySQL config)
+
+[mysql]
+default-character-set = utf8mb4
+
+[client]
+default-character-set = utf8mb4
+port = 3306
+socket = /var/run/mysqld/mysqld.sock

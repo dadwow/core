@@ -1,0 +1,59 @@
+# MySQL Configuration for Development Environment (Local Machine)
+# Optimized for local development with moderate resource usage
+
+[mysqld]
+# Basic Settings
+port = 3306
+socket = /tmp/mysql.sock
+default-storage-engine = InnoDB
+character-set-server = utf8mb4
+collation-server = utf8mb4_general_ci
+
+# Connection Settings
+max_connections = 100
+max_connect_errors = 100
+wait_timeout = 600
+interactive_timeout = 600
+
+# InnoDB Settings - Moderate for development
+innodb_buffer_pool_size = 512M
+innodb_log_file_size = 128M
+innodb_log_buffer_size = 16M
+innodb_flush_log_at_trx_commit = 2
+innodb_flush_method = O_DIRECT
+innodb_file_per_table = 1
+innodb_buffer_pool_instances = 1
+
+# Thread Settings
+thread_cache_size = 8
+thread_stack = 256K
+
+# Table Cache
+table_open_cache = 400
+table_definition_cache = 400
+
+# Temp Tables
+tmp_table_size = 64M
+max_heap_table_size = 64M
+
+# MyISAM Settings (for older tables)
+key_buffer_size = 32M
+myisam_sort_buffer_size = 8M
+
+# Logging (more verbose for development)
+log_error = /var/log/mysql/error.log
+slow_query_log = 1
+slow_query_log_file = /var/log/mysql/slow-query.log
+long_query_time = 2
+log_queries_not_using_indexes = 0
+
+# Performance Schema (enabled for debugging)
+performance_schema = ON
+
+[mysql]
+default-character-set = utf8mb4
+
+[client]
+default-character-set = utf8mb4
+port = 3306
+socket = /tmp/mysql.sock

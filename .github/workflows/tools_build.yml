@@ -14,18 +14,10 @@ concurrency:
 
 jobs:
   build:
-    strategy:
-      fail-fast: true
-      matrix:
-        include:
-          - os: ubuntu-24.04
-            compiler:
-              CC: clang-18
-              CXX: clang++-18
-    runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }}-${{ matrix.compiler.CC }}
+    runs-on: ubuntu-22.04
+    name: ubuntu-22.04-clang-tools
     if: |
-      github.repository == 'mod-playerbots/azerothcore-wotlk' && !github.event.pull_request.draft
+      github.repository == 'dadwow/core' && !github.event.pull_request.draft
       && (
         contains(github.event.pull_request.labels.*.name, 'run-build')
         || github.event.label.name == 'run-build'
@@ -34,7 +26,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/linux-build
         with:
-          CC: ${{ matrix.compiler.CC }}
-          CXX: ${{ matrix.compiler.CXX }}
+          CC: clang
+          CXX: clang++
           tools: all
           pch: false

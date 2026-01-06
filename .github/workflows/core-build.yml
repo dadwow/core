@@ -10,27 +10,8 @@ on:
 
 jobs:
   build:
-    strategy:
-      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
-      fail-fast: false
-      matrix:
-        # the result of the matrix will be the combination of all attributes, so we get os*compiler builds
-        include:
-          - os: ubuntu-22.04
-            c_compiler: clang
-            cpp_compiler: clang++
-            build_type: Release
-          - os: ubuntu-22.04
-            c_compiler: gcc
-            cpp_compiler: g++
-            build_type: Release
-          - os: ubuntu-24.04
-            c_compiler: gcc
-            cpp_compiler: g++
-            build_type: Release
-            
-    runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }}-${{ matrix.cpp_compiler }}
+    runs-on: ubuntu-22.04
+    name: ubuntu-22.04-clang
 
     steps:
     - name: Checkout AzerothCore

@@ -19,27 +19,13 @@ permissions:
 
 jobs:
   build:
-    strategy:
-      fail-fast: true
-      matrix:
-        include:
-          - os: ubuntu-22.04
-            compiler:
-              CC: clang-15
-              CXX: clang++-15
-          - os: ubuntu-24.04
-            compiler:
-              CC: clang-18
-              CXX: clang++-18
-    runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }}-${{ matrix.compiler }}-pch
-    env:
-      COMPILER: ${{ matrix.compiler }}
-    if: github.repository == 'mod-playerbots/azerothcore-wotlk' && !github.event.pull_request.draft
+    runs-on: ubuntu-22.04
+    name: ubuntu-22.04-clang-pch
+    if: github.repository == 'dadwow/core' && !github.event.pull_request.draft
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/linux-build
         with:
-          CC: ${{ matrix.compiler.CC }}
-          CXX: ${{ matrix.compiler.CXX }}
+          CC: clang
+          CXX: clang++
           pch: true

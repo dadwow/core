@@ -106,7 +106,14 @@ export DOCKER_IMAGE_TAG=latest
 
 # Or use a specific commit
 export DOCKER_IMAGE_TAG=Playerbot-abc1234
+
+# Select MySQL configuration (default: rpi5.cnf)
+export MYSQL_CONFIG=dev.cnf      # For local development
+export MYSQL_CONFIG=rpi5.cnf     # For Raspberry Pi 5 (default)
+export MYSQL_CONFIG=hetzner.cnf  # For Hetzner VPS
 ```
+
+See [config/mysql/README.md](../config/mysql/README.md) for detailed MySQL configuration documentation.
 
 ## Building Images Locally
 
