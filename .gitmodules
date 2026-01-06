@@ -1,0 +1,4 @@
+[submodule "modules/mod-playerbots"]
+	path = modules/mod-playerbots
+	url = git@github.com:dadwow/mod-playerbots.git
+	branch = pvp-enhancements

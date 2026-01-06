@@ -24,10 +24,12 @@ runs:
       id: meta
       uses: docker/metadata-action@v5
       with:
-        images: acore/ac-wotlk-${{ inputs.component-name }}
+        images: ghcr.io/dadwow/pluscraft-${{ inputs.component-name }}
         tags: |
           type=raw,value=${{ inputs.version }}
           type=ref,event=branch
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'Playerbot') }}
 
     - name: Build and push
       uses: docker/build-push-action@v5
