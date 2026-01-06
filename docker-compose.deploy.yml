@@ -1,0 +1,37 @@
+# docker-compose.deploy.yml for PlusCraft
+#
+# This file overrides the base docker-compose.yml to use pre-built images
+# from GitHub Container Registry instead of building locally.
+#
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.deploy.yml pull
+#   docker compose -f docker-compose.yml -f docker-compose.deploy.yml up -d
+#
+# Or set COMPOSE_FILE environment variable:
+#   export COMPOSE_FILE=docker-compose.yml:docker-compose.deploy.yml
+#   docker compose pull && docker compose up -d
+
+services:
+  ac-db-import:
+    image: ghcr.io/dadwow/pluscraft-db-import:${DOCKER_IMAGE_TAG:-Playerbot}
+    build: null  # Don't build, use pre-built image
+
+  ac-worldserver:
+    image: ghcr.io/dadwow/pluscraft-worldserver:${DOCKER_IMAGE_TAG:-Playerbot}
+    build: null  # Don't build, use pre-built image
+
+  ac-authserver:
+    image: ghcr.io/dadwow/pluscraft-authserver:${DOCKER_IMAGE_TAG:-Playerbot}
+    build: null  # Don't build, use pre-built image
+
+  ac-client-data-init:
+    image: ghcr.io/dadwow/pluscraft-client-data:${DOCKER_IMAGE_TAG:-Playerbot}
+    build: null  # Don't build, use pre-built image
+
+  ac-tools:
+    image: ghcr.io/dadwow/pluscraft-tools:${DOCKER_IMAGE_TAG:-Playerbot}
+    build: null  # Don't build, use pre-built image
+
+  ac-dev-server:
+    image: ghcr.io/dadwow/pluscraft-dev:${DOCKER_IMAGE_TAG:-Playerbot}
+    build: null  # Don't build, use pre-built image
